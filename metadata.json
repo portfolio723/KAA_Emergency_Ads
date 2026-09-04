@@ -1,0 +1,6 @@
+{
+  "name": "KAA Dentals",
+  "description": "Urgent dental care in Mountain Ash and Rhymney. £50 emergency appointments for toothache, broken teeth, swelling and abscesses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

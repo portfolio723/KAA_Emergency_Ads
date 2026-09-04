@@ -176,7 +176,7 @@ function BookButton({ className = "" }: { className?: string }) {
   return (
     <a
       href="#request"
-      className={`${CTA_BASE} border border-gold/60 text-foreground hover:bg-gold/15 ${className}`}
+      className={`${CTA_BASE} bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99] ${className}`}
     >
       Book an appointment
     </a>
@@ -451,18 +451,8 @@ function EmergencyPage() {
               Need urgent dental care? We can help with toothache, broken teeth, swelling, dental
               abscesses and other dental emergencies.
             </p>
-            <div className="mt-8">
-              <div className="flex flex-wrap items-center gap-3">
-                <CallButton />
-              </div>
-              <div className="mt-3.5 flex items-center gap-2 text-xs text-white/85">
-                <Clock className="h-3.5 w-3.5 shrink-0 text-gold" />
-                <span className="font-medium text-white">Monday to Saturday</span>
-                <span className="text-white/40">•</span>
-                <span className="rounded bg-white/10 px-2 py-0.5 font-semibold text-gold-soft">
-                  9AM – 5PM
-                </span>
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <CallButton />
             </div>
           </div>
 
@@ -512,6 +502,17 @@ function EmergencyPage() {
                     01685 840 700
                   </span>
                 </a>
+              </div>
+
+              {/* Timings under locations */}
+              <div className="mt-3.5 border-t border-border/60 pt-3">
+                <div className="flex items-center justify-between py-1.5 text-sm font-medium text-foreground">
+                  <span className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-gold shrink-0" />
+                    <span className="font-semibold text-primary">Monday to Saturday</span>
+                  </span>
+                  <span className="font-bold tracking-tight text-foreground">9AM – 5PM</span>
+                </div>
               </div>
             </div>
           </div>

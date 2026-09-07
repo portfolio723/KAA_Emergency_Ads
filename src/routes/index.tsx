@@ -296,6 +296,11 @@ function PillarsSection() {
   return (
     <section className="border-y border-border bg-card shadow-xs">
       <div className="mx-auto max-w-6xl">
+        <div className="border-b border-border/70 px-6 pt-7 pb-4 md:hidden">
+          <h2 className="text-2xl font-medium leading-tight text-foreground">
+            Why book with KAA Dentals?
+          </h2>
+        </div>
         <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4">
           {/* Block 1: Local Emergency Care */}
           <motion.div
@@ -1241,16 +1246,16 @@ function EmergencyPage() {
                   transition={{ duration: 0.35, delay: i * 0.02, ease: EASE_OUT }}
                   className={
                     isMainPractice
-                      ? "inline-flex items-center gap-1.5 rounded-full border-2 border-gold bg-gold/20 px-3 py-1.5 text-xs font-semibold text-gold-soft shadow-[0_0_10px_rgba(200,160,80,0.2)] transition-all sm:px-4 sm:py-2 sm:text-sm"
+                      ? "inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] text-white/85 transition-all hover:border-gold/60 hover:text-white sm:px-3.5 sm:py-1.5 sm:text-xs md:gap-1.5 md:border-2 md:border-gold md:bg-gold/20 md:px-4 md:py-2 md:text-sm md:font-semibold md:text-gold-soft md:shadow-[0_0_10px_rgba(200,160,80,0.2)]"
                       : "inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] text-white/85 transition-all hover:border-gold/60 hover:text-white sm:px-3.5 sm:py-1.5 sm:text-xs md:text-sm"
                   }
                 >
                   {isMainPractice && (
-                    <MapPin className="h-3 w-3 shrink-0 text-gold sm:h-3.5 sm:w-3.5" />
+                    <MapPin className="hidden h-3.5 w-3.5 shrink-0 text-gold md:inline-block" />
                   )}
                   <span>Dentist near {a}</span>
                   {isMainPractice && (
-                    <span className="rounded-full bg-gold/25 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-gold sm:text-[10px]">
+                    <span className="hidden rounded-full bg-gold/25 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold md:inline-block">
                       Practice
                     </span>
                   )}

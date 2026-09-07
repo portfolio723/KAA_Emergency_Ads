@@ -297,88 +297,89 @@ function PillarsSection() {
     <section className="border-y border-border bg-card shadow-xs">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4">
-          {/* Block 1: Approach */}
+          {/* Block 1: Local Emergency Care */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: 0, ease: EASE_OUT }}
-            className="flex items-center gap-4 px-6 py-6 lg:py-8"
+            className="flex items-center gap-4 px-6 py-6 transition-colors hover:bg-secondary/20 lg:py-8"
+          >
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
+              <MapPin className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-muted-foreground">
+                LOCAL CARE
+              </p>
+              <p className="mt-0.5 font-display text-base font-medium leading-snug text-foreground md:text-lg">
+                Local emergency care
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Block 2: Same-day emergency appointments */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.08, ease: EASE_OUT }}
+            className="flex items-center gap-4 px-6 py-6 transition-colors hover:bg-secondary/20 lg:py-8"
           >
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
               <Clock className="h-5 w-5" />
             </span>
             <div>
               <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-muted-foreground">
-                APPROACH
+                AVAILABILITY
               </p>
-              <p className="mt-0.5 font-display text-base font-medium text-foreground md:text-lg">
-                Clear, considered care
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Block 2: First Step */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: 0.08, ease: EASE_OUT }}
-            className="flex items-center gap-4 px-6 py-6 lg:py-8"
-          >
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
-              <Stethoscope className="h-5 w-5" />
-            </span>
-            <div>
-              <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-muted-foreground">
-                FIRST STEP
-              </p>
-              <p className="mt-0.5 font-display text-base font-medium text-foreground md:text-lg">
-                Emergency assessment
+              <p className="mt-0.5 font-display text-base font-medium leading-snug text-foreground md:text-lg">
+                Same-day emergency appointments when available
               </p>
             </div>
           </motion.div>
 
-          {/* Block 3: Experience */}
+          {/* Block 3: No routine waiting list */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: 0.16, ease: EASE_OUT }}
-            className="flex items-center gap-4 px-6 py-6 lg:py-8"
+            className="flex items-center gap-4 px-6 py-6 transition-colors hover:bg-secondary/20 lg:py-8"
           >
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
               <ShieldCheck className="h-5 w-5" />
             </span>
             <div>
               <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-muted-foreground">
-                EXPERIENCE
+                DIRECT ACCESS
               </p>
-              <p className="mt-0.5 font-display text-base font-medium text-foreground md:text-lg">
-                Calm and straightforward
+              <p className="mt-0.5 font-display text-base font-medium leading-snug text-foreground md:text-lg">
+                No routine waiting list for emergency care
               </p>
             </div>
           </motion.div>
 
-          {/* Block 4: Ready to Talk? */}
-          <motion.a
-            href="#request"
+          {/* Block 4: Gentle care for nervous patients */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: 0.24, ease: EASE_OUT }}
-            className="group flex items-center justify-between px-6 py-6 transition-colors hover:bg-secondary/40 lg:py-8"
+            className="flex items-center gap-4 px-6 py-6 transition-colors hover:bg-secondary/20 lg:py-8"
           >
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
+              <HeartHandshake className="h-5 w-5" />
+            </span>
             <div>
               <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-muted-foreground">
-                READY TO TALK?
+                PATIENT COMFORT
               </p>
-              <p className="mt-0.5 font-display text-base font-medium text-foreground transition-colors group-hover:text-gold md:text-lg">
-                Start your request
+              <p className="mt-0.5 font-display text-base font-medium leading-snug text-foreground md:text-lg">
+                Gentle care for nervous patients
               </p>
             </div>
-            <ArrowRight className="h-5 w-5 text-gold transition-transform group-hover:translate-x-1" />
-          </motion.a>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -525,7 +526,7 @@ function EmergencyPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE_OUT }}
             >
-              <Badge light>Emergency Dentist</Badge>
+              <Badge light>Emergency Dentist in Mountain Ash &amp; Rhymney</Badge>
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 18 }}
@@ -1020,7 +1021,12 @@ function EmergencyPage() {
           >
             <div>
               <ShieldCheck className="h-6 w-6 text-gold" />
-              <h3 className="mt-3 text-lg">We'll:</h3>
+              <h3 className="mt-3 text-lg font-medium text-foreground">
+                <span className="md:hidden">
+                  Included in your <span className="font-bold text-gold">£50</span> fee:
+                </span>
+                <span className="hidden md:inline">We'll:</span>
+              </h3>
             </div>
             <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
               {[
@@ -1221,20 +1227,35 @@ function EmergencyPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.55, delay: 0.15, ease: EASE_OUT }}
-            className="mt-8 flex flex-wrap gap-2.5"
+            className="mt-8 flex flex-wrap items-center gap-2 sm:gap-2.5"
           >
-            {areas.map((a, i) => (
-              <motion.li
-                key={a}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: i * 0.02, ease: EASE_OUT }}
-                className="rounded-full border border-gold/40 px-4 py-1.5 text-sm opacity-90 transition-colors hover:border-gold hover:opacity-100"
-              >
-                Dentist near {a}
-              </motion.li>
-            ))}
+            {areas.map((a, i) => {
+              const isMainPractice = a === "Mountain Ash" || a === "Rhymney";
+              return (
+                <motion.li
+                  key={a}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: i * 0.02, ease: EASE_OUT }}
+                  className={
+                    isMainPractice
+                      ? "inline-flex items-center gap-1.5 rounded-full border-2 border-gold bg-gold/20 px-3 py-1.5 text-xs font-semibold text-gold-soft shadow-[0_0_10px_rgba(200,160,80,0.2)] transition-all sm:px-4 sm:py-2 sm:text-sm"
+                      : "inline-flex items-center rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] text-white/85 transition-all hover:border-gold/60 hover:text-white sm:px-3.5 sm:py-1.5 sm:text-xs md:text-sm"
+                  }
+                >
+                  {isMainPractice && (
+                    <MapPin className="h-3 w-3 shrink-0 text-gold sm:h-3.5 sm:w-3.5" />
+                  )}
+                  <span>Dentist near {a}</span>
+                  {isMainPractice && (
+                    <span className="rounded-full bg-gold/25 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-gold sm:text-[10px]">
+                      Practice
+                    </span>
+                  )}
+                </motion.li>
+              );
+            })}
           </motion.ul>
         </div>
       </section>
@@ -1273,7 +1294,7 @@ function EmergencyPage() {
         </div>
       </section>
 
-      <footer className="border-t border-border bg-card">
+      <footer className="hidden border-t border-border bg-card md:block">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-5 py-10 sm:flex-row sm:items-center sm:justify-between">
           <img src={logoImg} alt="KAA Dentals" className="h-9 w-auto object-contain" />
           <div className="flex flex-wrap items-center gap-3">

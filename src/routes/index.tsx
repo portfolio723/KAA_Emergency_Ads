@@ -232,7 +232,7 @@ function SectionHeading({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6, delay: 0.08, ease: EASE_OUT }}
-        className="mt-4 max-w-3xl text-3xl leading-tight md:text-4xl"
+        className="mt-4 max-w-3xl text-2xl leading-tight md:text-3xl"
       >
         {title}
       </motion.h2>
@@ -757,7 +757,7 @@ function EmergencyPage() {
               className="lg:sticky lg:top-24"
             >
               <Badge light>Book online</Badge>
-              <h2 className="mt-4 max-w-3xl text-3xl leading-tight text-white md:text-4xl">
+              <h2 className="mt-4 max-w-3xl text-2xl leading-tight text-white md:text-3xl">
                 Request an emergency appointment
               </h2>
               <p className="mt-4 text-base leading-relaxed text-white/85 md:text-lg">
@@ -765,7 +765,7 @@ function EmergencyPage() {
                 appointment.
               </p>
 
-              <div className="mt-8 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+              <div className="hidden mt-8 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur md:block">
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-gold-soft">
                   What to expect:
                 </h3>
@@ -794,7 +794,7 @@ function EmergencyPage() {
                 </ul>
               </div>
 
-              <div className="mt-6 pt-2">
+              <div className="hidden mt-6 pt-2 md:block">
                 <p className="text-xs font-semibold uppercase tracking-wider text-white/70">
                   Need to speak with us directly?
                 </p>
@@ -1178,7 +1178,7 @@ function EmergencyPage() {
             className="lg:sticky lg:top-24"
           >
             <Badge>Questions</Badge>
-            <h2 className="mt-4 max-w-3xl text-3xl leading-tight text-foreground md:text-4xl">
+            <h2 className="mt-4 max-w-3xl text-2xl leading-tight text-foreground md:text-3xl">
               The things people actually ask.
             </h2>
           </motion.div>

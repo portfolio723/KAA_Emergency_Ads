@@ -334,7 +334,8 @@ function PillarsSection() {
                 AVAILABILITY
               </p>
               <p className="mt-0.5 font-display text-base font-medium leading-snug text-foreground md:text-lg">
-                Same-day emergency appointments when available
+                Same-day emergency appointments
+                <span className="md:hidden"> when available</span>
               </p>
             </div>
           </motion.div>
@@ -355,7 +356,8 @@ function PillarsSection() {
                 DIRECT ACCESS
               </p>
               <p className="mt-0.5 font-display text-base font-medium leading-snug text-foreground md:text-lg">
-                No routine waiting list for emergency care
+                No routine waiting list for emergency
+                <span className="md:hidden"> care</span>
               </p>
             </div>
           </motion.div>
@@ -610,11 +612,10 @@ function EmergencyPage() {
             transition={{ duration: 0.65, delay: 0.15, ease: EASE_OUT }}
             className="rounded-2xl border border-gold/30 bg-card p-7 text-card-foreground shadow-[var(--shadow-soft)]"
           >
-            <div className="flex items-center justify-between gap-4">
-              <p className="text-sm font-medium leading-snug text-muted-foreground">
-                For emergency appointments,
-                <br />
-                you can also book online.
+            <p className="text-sm font-medium text-[#666c87]">You can also book online</p>
+            <div className="mt-3 flex items-center justify-between gap-4">
+              <p className="text-[16px] font-bold leading-snug text-black md:text-[20px] md:font-normal">
+                The Emergency Appointment Fee
               </p>
               <p className="font-display text-5xl text-primary shrink-0">£50</p>
             </div>

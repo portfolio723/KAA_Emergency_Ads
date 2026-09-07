@@ -15,12 +15,13 @@ import {
   CalendarDays,
   Stethoscope,
   ChevronDown,
-  Image as ImageIcon,
-  Activity,
-  Sparkles,
-  ShieldAlert,
 } from "lucide-react";
 import logoImg from "@/assets/KH-scaled-1-2048x588.png.webp";
+import ke1Img from "@/assets/ke1.png";
+import ke2Img from "@/assets/ke2.png";
+import ke3Img from "@/assets/ke3.png";
+import ke4Img from "@/assets/ke4.png";
+import ke5Img from "@/assets/ke5.png";
 import {
   Accordion,
   AccordionContent,
@@ -34,6 +35,12 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -65,6 +72,7 @@ export const Route = createFileRoute("/")({
 const PHONE = "01443 473 555";
 const TEL = `tel:${PHONE.replace(/\s/g, "")}`;
 const WHATSAPP = `https://wa.me/44${PHONE.replace(/\s/g, "").replace(/^0/, "")}`;
+const WHATSAPP_ICON = "https://img.icons8.com/?size=100&id=7OeRNqg6S7Vf&format=png&color=000000";
 
 const navItems = [
   { label: "Overview", href: "#overview" },
@@ -79,36 +87,31 @@ const problems = [
     title: "Toothache",
     body: "Severe or ongoing tooth pain?",
     cta: "Toothache treatment",
-    category: "Pain Assessment",
-    icon: Activity,
+    image: ke1Img,
   },
   {
     title: "Broken or chipped tooth",
     body: "Broken, cracked or chipped your tooth?",
     cta: "Broken tooth treatment",
-    category: "Tooth Restoration",
-    icon: ShieldAlert,
+    image: ke2Img,
   },
   {
     title: "Swelling or dental abscess",
     body: "Swelling, infection or a painful lump?",
     cta: "Dental abscess treatment",
-    category: "Infection Relief",
-    icon: Stethoscope,
+    image: ke3Img,
   },
   {
     title: "Lost filling or crown",
     body: "Lost or damaged a filling or crown?",
     cta: "Lost filling treatment",
-    category: "Restoration Care",
-    icon: Sparkles,
+    image: ke4Img,
   },
   {
     title: "Tooth extraction",
     body: "A painful or badly damaged tooth that may need removing?",
     cta: "Tooth extraction",
-    category: "Urgent Extraction",
-    icon: ShieldCheck,
+    image: ke5Img,
   },
   {
     title: "Not sure what's wrong?",
@@ -376,13 +379,8 @@ function EmergencyPage() {
               href={WHATSAPP}
               target="_blank"
               rel="noreferrer"
-              className="hidden items-center gap-2 rounded-cta bg-whatsapp px-4 py-2 text-sm font-medium text-whatsapp-foreground shadow-sm transition hover:opacity-90 md:inline-flex"
+              className="hidden items-center gap-2 rounded-cta bg-whatsapp px-4 py-2 text-sm font-medium text-whatsapp-foreground shadow-sm transition hover:opacity-90 sm:inline-flex"
             >
-              <img
-                src="https://img.icons8.com/?size=100&id=7OeRNqg6S7Vf&format=png&color=000000"
-                alt="WhatsApp"
-                className="h-4 w-4 brightness-0 invert"
-              />
               WhatsApp
             </a>
             <button
@@ -427,9 +425,10 @@ function EmergencyPage() {
                   className="flex items-center gap-2 rounded-lg bg-whatsapp/15 px-3 py-2 text-sm font-medium text-primary"
                 >
                   <img
-                    src="https://img.icons8.com/?size=100&id=7OeRNqg6S7Vf&format=png&color=000000"
+                    src={WHATSAPP_ICON}
                     alt="WhatsApp"
                     className="h-4 w-4"
+                    referrerPolicy="no-referrer"
                   />
                   Chat on WhatsApp
                 </a>
@@ -452,7 +451,56 @@ function EmergencyPage() {
               abscesses and other dental emergencies.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <CallButton />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    className={`${CTA_BASE} bg-gold text-primary shadow-[var(--shadow-soft)] hover:-translate-y-0.5 active:scale-[0.99]`}
+                  >
+                    <Phone className="h-4 w-4" />
+                    <span>Call us now</span>
+                    <ChevronDown className="h-4 w-4 opacity-80" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="start"
+                  className="w-72 rounded-2xl border border-border bg-card p-2 text-card-foreground shadow-xl"
+                >
+                  <div className="px-3 py-2 text-xs font-semibold tracking-wider uppercase text-muted-foreground">
+                    Call our practices directly:
+                  </div>
+                  <DropdownMenuItem asChild>
+                    <a
+                      href="tel:01443474441"
+                      className="flex cursor-pointer items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-secondary focus:bg-secondary"
+                    >
+                      <span className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 shrink-0 text-gold" />
+                        <span className="font-semibold text-primary">Mountain Ash</span>
+                      </span>
+                      <span className="flex items-center gap-1.5 font-bold tracking-tight text-foreground">
+                        <Phone className="h-3.5 w-3.5 shrink-0 text-gold" />
+                        <span>01443 474 441</span>
+                      </span>
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a
+                      href="tel:01685840700"
+                      className="flex cursor-pointer items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors hover:bg-secondary focus:bg-secondary"
+                    >
+                      <span className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 shrink-0 text-gold" />
+                        <span className="font-semibold text-primary">Rhymney</span>
+                      </span>
+                      <span className="flex items-center gap-1.5 font-bold tracking-tight text-foreground">
+                        <Phone className="h-3.5 w-3.5 shrink-0 text-gold" />
+                        <span>01685 840 700</span>
+                      </span>
+                    </a>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
@@ -483,11 +531,12 @@ function EmergencyPage() {
                   className="group flex items-center justify-between py-1.5 text-sm font-medium text-foreground transition-colors hover:text-gold"
                 >
                   <span className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-gold transition-transform group-hover:scale-110" />
+                    <MapPin className="h-4 w-4 shrink-0 text-gold transition-transform group-hover:scale-110" />
                     <span className="font-semibold text-primary">Mountain Ash</span>
                   </span>
-                  <span className="font-bold tracking-tight text-foreground transition-colors group-hover:text-gold">
-                    01443 474 441
+                  <span className="flex items-center gap-1.5 font-bold tracking-tight text-foreground transition-colors group-hover:text-gold">
+                    <Phone className="h-3.5 w-3.5 shrink-0 text-gold transition-transform group-hover:scale-110" />
+                    <span>01443 474 441</span>
                   </span>
                 </a>
                 <a
@@ -495,11 +544,12 @@ function EmergencyPage() {
                   className="group flex items-center justify-between py-1.5 text-sm font-medium text-foreground transition-colors hover:text-gold"
                 >
                   <span className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-gold transition-transform group-hover:scale-110" />
+                    <MapPin className="h-4 w-4 shrink-0 text-gold transition-transform group-hover:scale-110" />
                     <span className="font-semibold text-primary">Rhymney</span>
                   </span>
-                  <span className="font-bold tracking-tight text-foreground transition-colors group-hover:text-gold">
-                    01685 840 700
+                  <span className="flex items-center gap-1.5 font-bold tracking-tight text-foreground transition-colors group-hover:text-gold">
+                    <Phone className="h-3.5 w-3.5 shrink-0 text-gold transition-transform group-hover:scale-110" />
+                    <span>01685 840 700</span>
                   </span>
                 </a>
               </div>
@@ -912,28 +962,19 @@ function EmergencyPage() {
                 );
               }
 
-              const Icon = p.icon || Activity;
-
               return (
                 <div
                   key={p.title}
                   className="group flex flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:border-gold hover:shadow-md"
                 >
-                  {/* Image Placeholder */}
-                  <div className="relative mb-4 aspect-[16/10] w-full overflow-hidden rounded-xl border border-border/70 bg-gradient-to-b from-secondary/80 to-secondary/30 transition-colors group-hover:border-gold/50">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,oklch(0.74_0.12_75_/_0.08)_0%,transparent_70%)]" />
-                    <div className="absolute right-2.5 top-2.5 flex items-center gap-1 rounded-md border border-border/50 bg-background/85 px-2 py-0.5 text-[10px] font-medium text-muted-foreground backdrop-blur-xs">
-                      <ImageIcon className="h-3 w-3 text-gold" />
-                      <span>Treatment</span>
-                    </div>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/40 bg-card text-primary shadow-xs transition-transform duration-300 group-hover:scale-105">
-                        <Icon className="h-6 w-6 text-gold" />
-                      </div>
-                      <span className="mt-2.5 text-[11px] font-semibold tracking-wider uppercase text-muted-foreground">
-                        {p.category}
-                      </span>
-                    </div>
+                  {/* Image */}
+                  <div className="relative mb-4 aspect-[16/9] w-full overflow-hidden rounded-xl border border-border/70 bg-secondary transition-colors group-hover:border-gold/50">
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
                   </div>
 
                   <h3 className="text-lg font-medium text-foreground">{p.title}</h3>
@@ -1036,7 +1077,23 @@ function EmergencyPage() {
       <footer className="border-t border-border bg-card">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-5 py-10 sm:flex-row sm:items-center sm:justify-between">
           <img src={logoImg} alt="KAA Dentals" className="h-9 w-auto object-contain" />
-          <CallButton />
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href={WHATSAPP}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-cta bg-whatsapp px-5 py-3.5 text-sm font-medium text-whatsapp-foreground shadow-sm transition hover:opacity-90"
+            >
+              <img
+                src={WHATSAPP_ICON}
+                alt="WhatsApp"
+                className="h-4 w-4 brightness-0 invert"
+                referrerPolicy="no-referrer"
+              />
+              WhatsApp
+            </a>
+            <CallButton />
+          </div>
         </div>
       </footer>
 
@@ -1058,9 +1115,10 @@ function EmergencyPage() {
           className="flex items-center justify-center gap-2 bg-whatsapp py-4 text-sm font-medium text-whatsapp-foreground"
         >
           <img
-            src="https://img.icons8.com/?size=100&id=7OeRNqg6S7Vf&format=png&color=000000"
+            src={WHATSAPP_ICON}
             alt="WhatsApp"
             className="h-4 w-4 brightness-0 invert"
+            referrerPolicy="no-referrer"
           />
           WhatsApp
         </a>

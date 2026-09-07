@@ -43,6 +43,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
+import { motion } from "motion/react";
+
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -204,18 +207,46 @@ function Badge({ children, light = false }: { children: ReactNode; light?: boole
 function SectionHeading({
   badge,
   title,
+  subtitle,
   light = false,
   className = "",
 }: {
   badge: string;
   title: string;
+  subtitle?: string;
   light?: boolean;
   className?: string;
 }) {
   return (
     <div className={className}>
-      <Badge light={light}>{badge}</Badge>
-      <h2 className="mt-4 max-w-3xl text-3xl leading-tight md:text-4xl">{title}</h2>
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5, ease: EASE_OUT }}
+      >
+        <Badge light={light}>{badge}</Badge>
+      </motion.div>
+      <motion.h2
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, delay: 0.08, ease: EASE_OUT }}
+        className="mt-4 max-w-3xl text-3xl leading-tight md:text-4xl"
+      >
+        {title}
+      </motion.h2>
+      {subtitle && (
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, delay: 0.16, ease: EASE_OUT }}
+          className={`mt-3 max-w-2xl ${light ? "opacity-90" : "text-muted-foreground"}`}
+        >
+          {subtitle}
+        </motion.p>
+      )}
     </div>
   );
 }
@@ -267,7 +298,13 @@ function PillarsSection() {
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4">
           {/* Block 1: Approach */}
-          <div className="flex items-center gap-4 px-6 py-6 lg:py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0, ease: EASE_OUT }}
+            className="flex items-center gap-4 px-6 py-6 lg:py-8"
+          >
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
               <Clock className="h-5 w-5" />
             </span>
@@ -279,10 +316,16 @@ function PillarsSection() {
                 Clear, considered care
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Block 2: First Step */}
-          <div className="flex items-center gap-4 px-6 py-6 lg:py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.08, ease: EASE_OUT }}
+            className="flex items-center gap-4 px-6 py-6 lg:py-8"
+          >
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
               <Stethoscope className="h-5 w-5" />
             </span>
@@ -294,10 +337,16 @@ function PillarsSection() {
                 Emergency assessment
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Block 3: Experience */}
-          <div className="flex items-center gap-4 px-6 py-6 lg:py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.16, ease: EASE_OUT }}
+            className="flex items-center gap-4 px-6 py-6 lg:py-8"
+          >
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/60 bg-gold/10 text-gold">
               <ShieldCheck className="h-5 w-5" />
             </span>
@@ -309,11 +358,15 @@ function PillarsSection() {
                 Calm and straightforward
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Block 4: Ready to Talk? */}
-          <a
+          <motion.a
             href="#request"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.24, ease: EASE_OUT }}
             className="group flex items-center justify-between px-6 py-6 transition-colors hover:bg-secondary/40 lg:py-8"
           >
             <div>
@@ -325,7 +378,7 @@ function PillarsSection() {
               </p>
             </div>
             <ArrowRight className="h-5 w-5 text-gold transition-transform group-hover:translate-x-1" />
-          </a>
+          </motion.a>
         </div>
       </div>
     </section>
@@ -337,6 +390,31 @@ function EmergencyPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [active, setActive] = useState(navItems[0].href);
+  const [isCallingPracticesBlinking, setIsCallingPracticesBlinking] = useState(false);
+  const blinkTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (blinkTimerRef.current) {
+        clearTimeout(blinkTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleMobileCallClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById("hero-call-practices");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setIsCallingPracticesBlinking(true);
+      if (blinkTimerRef.current) {
+        clearTimeout(blinkTimerRef.current);
+      }
+      blinkTimerRef.current = setTimeout(() => {
+        setIsCallingPracticesBlinking(false);
+      }, 5000);
+    }
+  };
 
   useEffect(() => {
     const ids = navItems.map((n) => n.href.slice(1));
@@ -442,15 +520,36 @@ function EmergencyPage() {
       <section className="surface-navy">
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1.15fr_1fr] md:py-24">
           <div>
-            <Badge light>Emergency Dentist</Badge>
-            <h1 className="mt-5 text-4xl leading-[1.05] md:text-6xl">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: EASE_OUT }}
+            >
+              <Badge light>Emergency Dentist</Badge>
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: EASE_OUT }}
+              className="mt-5 text-4xl leading-[1.05] md:text-6xl"
+            >
               In pain? <span className="text-gradient-gold">Call us today.</span>
-            </h1>
-            <p className="mt-5 max-w-xl text-base leading-relaxed opacity-90 md:text-lg">
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.16, ease: EASE_OUT }}
+              className="mt-5 max-w-xl text-base leading-relaxed opacity-90 md:text-lg"
+            >
               Need urgent dental care? We can help with toothache, broken teeth, swelling, dental
               abscesses and other dental emergencies.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.24, ease: EASE_OUT }}
+              className="mt-8 flex flex-wrap items-center gap-3"
+            >
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
@@ -501,10 +600,15 @@ function EmergencyPage() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="rounded-2xl border border-gold/30 bg-card p-7 text-card-foreground shadow-[var(--shadow-soft)]">
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.15, ease: EASE_OUT }}
+            className="rounded-2xl border border-gold/30 bg-card p-7 text-card-foreground shadow-[var(--shadow-soft)]"
+          >
             <div className="flex items-center justify-between gap-4">
               <p className="text-sm font-medium leading-snug text-muted-foreground">
                 For emergency appointments,
@@ -520,15 +624,25 @@ function EmergencyPage() {
               Book an appointment
             </a>
 
-            {/* Two locations with each phone number as CTA without borders */}
-            <div className="mt-6 border-t border-border/70 pt-5">
+            {/* Two locations with each phone number as CTA */}
+            <div
+              id="hero-call-practices"
+              className="mt-6 border-t border-border/70 pt-5 scroll-mt-28"
+            >
               <p className="text-xs font-semibold tracking-[0.12em] uppercase text-muted-foreground">
                 Call our practices directly:
               </p>
-              <div className="mt-3 flex flex-col gap-2">
+              <div
+                className={`mt-2.5 flex flex-col gap-2 rounded-2xl p-2.5 transition-all duration-300 ${
+                  isCallingPracticesBlinking
+                    ? "border-2 border-gold animate-gold-border-blink bg-gold/5 shadow-[0_0_16px_rgba(200,160,80,0.35)] md:animate-none md:border-transparent md:bg-transparent md:shadow-none"
+                    : "border-2 border-transparent"
+                }`}
+              >
                 <a
                   href="tel:01443474441"
-                  className="group flex items-center justify-between py-1.5 text-sm font-medium text-foreground transition-colors hover:text-gold"
+                  onClick={() => setIsCallingPracticesBlinking(false)}
+                  className="group flex items-center justify-between rounded-xl px-2.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-gold/10 hover:text-gold"
                 >
                   <span className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 shrink-0 text-gold transition-transform group-hover:scale-110" />
@@ -541,7 +655,8 @@ function EmergencyPage() {
                 </a>
                 <a
                   href="tel:01685840700"
-                  className="group flex items-center justify-between py-1.5 text-sm font-medium text-foreground transition-colors hover:text-gold"
+                  onClick={() => setIsCallingPracticesBlinking(false)}
+                  className="group flex items-center justify-between rounded-xl px-2.5 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-gold/10 hover:text-gold"
                 >
                   <span className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 shrink-0 text-gold transition-transform group-hover:scale-110" />
@@ -565,7 +680,7 @@ function EmergencyPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -579,7 +694,13 @@ function EmergencyPage() {
           title="One problem, one appointment — focused on getting you out of pain."
         />
         <div className="mt-8 grid gap-10 md:grid-cols-2">
-          <div className="space-y-4 text-muted-foreground">
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT }}
+            className="space-y-4 text-muted-foreground"
+          >
             <p>
               When you're in dental pain, you need to know what's wrong and what to do next. Our
               emergency appointments are designed to assess the problem, take X-rays if needed and
@@ -598,9 +719,15 @@ function EmergencyPage() {
                 you the help you need.
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <figure className="flex flex-col justify-center rounded-2xl border border-gold/40 bg-card p-7 shadow-[var(--shadow-soft)]">
+          <motion.figure
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT }}
+            className="flex flex-col justify-center rounded-2xl border border-gold/40 bg-card p-7 shadow-[var(--shadow-soft)]"
+          >
             <div className="flex gap-1 text-gold">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} className="h-5 w-5 fill-current" />
@@ -613,7 +740,7 @@ function EmergencyPage() {
             <figcaption className="mt-4 text-sm text-muted-foreground">
               KAA Dentals patient
             </figcaption>
-          </figure>
+          </motion.figure>
         </div>
       </section>
 
@@ -622,7 +749,13 @@ function EmergencyPage() {
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:items-start">
             {/* Left side: Badge, header, description, and details */}
-            <div className="lg:sticky lg:top-24">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, ease: EASE_OUT }}
+              className="lg:sticky lg:top-24"
+            >
               <Badge light>Book online</Badge>
               <h2 className="mt-4 max-w-3xl text-3xl leading-tight text-white md:text-4xl">
                 Request an emergency appointment
@@ -682,10 +815,16 @@ function EmergencyPage() {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right side: Form card with white background and refined typographic hierarchy */}
-            <div className="rounded-3xl border border-gold/30 bg-card p-6 text-card-foreground shadow-[var(--shadow-soft)] sm:p-9 md:p-10">
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.65, delay: 0.15, ease: EASE_OUT }}
+              className="rounded-3xl border border-gold/30 bg-card p-6 text-card-foreground shadow-[var(--shadow-soft)] sm:p-9 md:p-10"
+            >
               <form onSubmit={onSubmit} className="space-y-4">
                 {/* Row 1: Name and Phone Number */}
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -842,7 +981,7 @@ function EmergencyPage() {
                   </button>
                 </div>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -864,15 +1003,21 @@ function EmergencyPage() {
 
       {/* What happens */}
       <section id="process" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16 md:py-24">
-        <SectionHeading badge="The process" title="What happens at your emergency appointment?" />
-        <p className="mt-3 max-w-2xl text-muted-foreground">
-          Your <span className="text-foreground">£50 emergency appointment</span> is an assessment
-          of your dental problem.
-        </p>
+        <SectionHeading
+          badge="The process"
+          title="What happens at your emergency appointment?"
+          subtitle="Your £50 emergency appointment is an assessment of your dental problem."
+        />
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {/* Card 1 */}
-          <div className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.55, delay: 0, ease: EASE_OUT }}
+            className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6"
+          >
             <div>
               <ShieldCheck className="h-6 w-6 text-gold" />
               <h3 className="mt-3 text-lg">We'll:</h3>
@@ -890,10 +1035,16 @@ function EmergencyPage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Card 2 */}
-          <div className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.55, delay: 0.12, ease: EASE_OUT }}
+            className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6"
+          >
             <div>
               <HeartHandshake className="h-6 w-6 text-gold" />
               <h3 className="mt-3 text-lg">If you need treatment</h3>
@@ -902,9 +1053,16 @@ function EmergencyPage() {
               We'll explain what needs to be done and the cost{" "}
               <span className="text-foreground">before treatment starts.</span>
             </p>
-          </div>
+          </motion.div>
 
-          <div className="rounded-2xl border border-gold/40 bg-secondary/60 p-6">
+          {/* Card 3 */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.55, delay: 0.24, ease: EASE_OUT }}
+            className="rounded-2xl border border-gold/40 bg-secondary/60 p-6"
+          >
             <Clock className="h-6 w-6 text-gold" />
             <h3 className="mt-3 text-lg">Common treatment prices</h3>
             <dl className="mt-3 space-y-2 text-sm">
@@ -922,12 +1080,18 @@ function EmergencyPage() {
             <p className="mt-3 text-xs italic text-muted-foreground">
               Prices are starting prices and may vary depending on the treatment required.
             </p>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="mt-8">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, delay: 0.15, ease: EASE_OUT }}
+          className="mt-8"
+        >
           <BookButton />
-        </div>
+        </motion.div>
       </section>
 
       {/* Problems */}
@@ -937,11 +1101,16 @@ function EmergencyPage() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {problems.map((p, idx) => {
               const hasImage = idx < 5; // except the 6th card
+              const colDelay = (idx % 3) * 0.1;
 
               if (!hasImage) {
                 return (
-                  <div
+                  <motion.div
                     key={p.title}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.55, delay: colDelay, ease: EASE_OUT }}
                     className="group flex flex-col justify-between rounded-2xl border border-gold/40 bg-card p-6 transition-all hover:border-gold hover:shadow-md"
                   >
                     <div>
@@ -958,13 +1127,17 @@ function EmergencyPage() {
                       <Phone className="h-4 w-4 text-gold" />
                       {p.cta}
                     </a>
-                  </div>
+                  </motion.div>
                 );
               }
 
               return (
-                <div
+                <motion.div
                   key={p.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.55, delay: colDelay, ease: EASE_OUT }}
                   className="group flex flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:border-gold hover:shadow-md"
                 >
                   {/* Image */}
@@ -986,7 +1159,7 @@ function EmergencyPage() {
                     {p.cta}
                     <ArrowRight className="h-4 w-4 text-gold transition-transform group-hover:translate-x-1" />
                   </a>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -997,15 +1170,27 @@ function EmergencyPage() {
       <section id="faq" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16 md:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:items-start">
           {/* Left side: Badge and header */}
-          <div className="lg:sticky lg:top-24">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: EASE_OUT }}
+            className="lg:sticky lg:top-24"
+          >
             <Badge>Questions</Badge>
             <h2 className="mt-4 max-w-3xl text-3xl leading-tight text-foreground md:text-4xl">
               The things people actually ask.
             </h2>
-          </div>
+          </motion.div>
 
           {/* Right side: Accordion */}
-          <div className="w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT }}
+            className="w-full"
+          >
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((f) => (
                 <AccordionItem key={f.q} value={f.q}>
@@ -1018,7 +1203,7 @@ function EmergencyPage() {
                 </AccordionItem>
               ))}
             </Accordion>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1029,21 +1214,28 @@ function EmergencyPage() {
             light
             badge="Local area"
             title="Emergency Dentist for patients across the local area."
+            subtitle="With practices in Mountain Ash and Rhymney, KAA Dentals provides emergency dental care for patients from nearby towns and communities."
           />
-          <p className="mt-3 max-w-2xl opacity-90">
-            With practices in <span className="text-gold-soft">Mountain Ash and Rhymney</span>, KAA
-            Dentals provides emergency dental care for patients from nearby towns and communities.
-          </p>
-          <ul className="mt-8 flex flex-wrap gap-2.5">
-            {areas.map((a) => (
-              <li
+          <motion.ul
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.55, delay: 0.15, ease: EASE_OUT }}
+            className="mt-8 flex flex-wrap gap-2.5"
+          >
+            {areas.map((a, i) => (
+              <motion.li
                 key={a}
-                className="rounded-full border border-gold/40 px-4 py-1.5 text-sm opacity-90"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.02, ease: EASE_OUT }}
+                className="rounded-full border border-gold/40 px-4 py-1.5 text-sm opacity-90 transition-colors hover:border-gold hover:opacity-100"
               >
                 Dentist near {a}
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
         </div>
       </section>
 
@@ -1054,8 +1246,15 @@ function EmergencyPage() {
           {[
             { name: "Mountain Ash", area: "Mountain Ash, Rhondda Cynon Taf" },
             { name: "Rhymney", area: "Rhymney, Caerphilly" },
-          ].map((p) => (
-            <div key={p.name} className="rounded-2xl border border-border bg-card p-6">
+          ].map((p, idx) => (
+            <motion.div
+              key={p.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.55, delay: idx * 0.12, ease: EASE_OUT }}
+              className="rounded-2xl border border-border bg-card p-6 transition-all hover:border-gold hover:shadow-md"
+            >
               <h3 className="text-xl">{p.name}</h3>
               <p className="mt-2 flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
@@ -1069,7 +1268,7 @@ function EmergencyPage() {
               >
                 Get directions
               </a>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -1102,12 +1301,13 @@ function EmergencyPage() {
         aria-label="Quick actions"
         className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-border pb-[env(safe-area-inset-bottom)] md:hidden"
       >
-        <a
-          href={TEL}
-          className="flex items-center justify-center gap-2 bg-gold py-4 text-sm font-medium text-primary"
+        <button
+          type="button"
+          onClick={handleMobileCallClick}
+          className="flex items-center justify-center gap-2 bg-gold py-4 text-sm font-medium text-primary transition-colors active:brightness-90"
         >
           <Phone className="h-4 w-4" /> Call
-        </a>
+        </button>
         <a
           href={WHATSAPP}
           target="_blank"

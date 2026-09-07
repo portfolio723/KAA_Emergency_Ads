@@ -209,3 +209,20 @@
 @utility animate-reason-in {
   animation: reason-in 0.45s ease-out both;
 }
+
+@keyframes gold-border-blink {
+  0%, 100% {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px oklch(0.74 0.12 75 / 0.45), 0 0 18px oklch(0.74 0.12 75 / 0.28);
+    background-color: oklch(0.74 0.12 75 / 0.08);
+  }
+  50% {
+    border-color: transparent;
+    box-shadow: 0 0 0 0 transparent;
+    background-color: transparent;
+  }
+}
+
+@utility animate-gold-border-blink {
+  animation: gold-border-blink 0.75s ease-in-out infinite;
+}

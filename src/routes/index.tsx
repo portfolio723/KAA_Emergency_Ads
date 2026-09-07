@@ -119,7 +119,7 @@ const problems = [
   {
     title: "Not sure what's wrong?",
     body: "That's fine. Call us and we'll advise you on what to do next.",
-    cta: `Call ${PHONE}`,
+    cta: "Call now",
   },
 ];
 
@@ -424,6 +424,20 @@ function EmergencyPage() {
     }
   };
 
+  const handleProblemsCallClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (window.innerWidth < 768) {
+      handleMobileCallClick(e);
+    } else {
+      const hero = document.getElementById("hero");
+      if (hero) {
+        hero.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  };
+
   useEffect(() => {
     const ids = navItems.map((n) => n.href.slice(1));
     const onScroll = () => {
@@ -525,7 +539,7 @@ function EmergencyPage() {
       </header>
 
       {/* Hero */}
-      <section className="surface-navy">
+      <section id="hero" className="surface-navy">
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1.15fr_1fr] md:py-24">
           <div>
             <motion.div
@@ -1133,7 +1147,8 @@ function EmergencyPage() {
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
                     </div>
                     <a
-                      href={TEL}
+                      href="#hero"
+                      onClick={handleProblemsCallClick}
                       className="mt-6 inline-flex items-center justify-center gap-2 rounded-cta bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-90 active:scale-[0.99]"
                     >
                       <Phone className="h-4 w-4 text-gold" />
